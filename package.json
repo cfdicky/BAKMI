@@ -1,0 +1,26 @@
+{
+  "name": "bakmi-jakarta-cc",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Landing page for Bakmi Jakarta CC — React 19 + Vite + Tailwind CSS v4",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "framer-motion": "^11.15.0",
+    "lucide-react": "^0.469.0",
+    "swiper": "^11.1.15",
+    "lenis": "^1.1.18"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.7",
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0"
+  }
+}

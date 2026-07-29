@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (Tailwind v4 @theme -> generates utilities like
+   bg-primary, text-accent, font-serif, etc. automatically) ---------- */
+@theme {
+  --color-bg: #fff9f3;
+  --color-section: #ffffff;
+  --color-primary: #e53935;
+  --color-primary-dark: #c4281f;
+  --color-accent: #ffd101;
+  --color-dark: #181818;
+  --color-dark-2: #232020;
+  --color-text: #2c2c2c;
+  --color-muted: #7a7a7a;
+  --color-border: rgba(0, 0, 0, 0.06);
+  --color-glass: rgba(255, 255, 255, 0.55);
+
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+
+  --ease-brand: cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* ---------- Keyframe animations used across components ---------- */
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scaleX(1);
+  }
+  25% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-140px) scaleX(1.6);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(4deg);
+  }
+}
+
+@keyframes chop-move {
+  0%,
+  100% {
+    transform: rotate(38deg);
+  }
+  50% {
+    transform: rotate(35deg) translateY(-4px);
+  }
+}
+
+@keyframes stamp-float {
+  0%,
+  100% {
+    transform: rotate(-13deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-9deg) translateY(-10px);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.5);
+  }
+}
+
+.animate-steam {
+  animation: steam-rise 4.5s ease-in infinite;
+}
+.animate-floaty {
+  animation: floaty 5.5s ease-in-out infinite;
+}
+.animate-chop {
+  animation: chop-move 6s ease-in-out infinite;
+}
+.animate-stamp {
+  animation: stamp-float 6.5s ease-in-out infinite;
+}
+.animate-pulse-dot {
+  animation: soft-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-steam,
+  .animate-floaty,
+  .animate-chop,
+  .animate-stamp,
+  .animate-pulse-dot {
+    animation: none !important;
+  }
+}
+
+/* Masonry gallery grid (CSS columns aren't a Tailwind utility, kept as a tiny helper) */
+.masonry-columns {
+  column-count: 2;
+  column-gap: 22px;
+}
+@media (min-width: 640px) {
+  .masonry-columns {
+    column-count: 3;
+  }
+}
+@media (min-width: 1024px) {
+  .masonry-columns {
+    column-count: 4;
+  }
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 22px;
+}

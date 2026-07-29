@@ -1,0 +1,58 @@
+[
+  {
+    "id": "g1",
+    "label": "Hand-Pulling the Dough",
+    "category": "Kitchen",
+    "height": 260,
+    "gradient": "linear-gradient(155deg,#3a2c1c,#181110)"
+  },
+  {
+    "id": "g2",
+    "label": "Weekend Dining Room",
+    "category": "Interior",
+    "height": 320,
+    "gradient": "linear-gradient(155deg,#e5cba3,#c99a63)"
+  },
+  {
+    "id": "g3",
+    "label": "Bakmi Jakarta Original",
+    "category": "Food",
+    "height": 230,
+    "gradient": "linear-gradient(155deg,#5c2a1c,#2c1410)"
+  },
+  {
+    "id": "g4",
+    "label": "The Broth, Slow-Simmered",
+    "category": "Kitchen",
+    "height": 290,
+    "gradient": "linear-gradient(155deg,#7a4a2a,#3a2416)"
+  },
+  {
+    "id": "g5",
+    "label": "Chef at the Wok",
+    "category": "Chef",
+    "height": 250,
+    "gradient": "linear-gradient(155deg,#2c2c2c,#111111)"
+  },
+  {
+    "id": "g6",
+    "label": "Family Table, Sunday",
+    "category": "Guests",
+    "height": 300,
+    "gradient": "linear-gradient(155deg,#e7cba0,#b98850)"
+  },
+  {
+    "id": "g7",
+    "label": "Fresh Off the Steamer",
+    "category": "Food",
+    "height": 240,
+    "gradient": "linear-gradient(155deg,#8a5a2a,#3a2010)"
+  },
+  {
+    "id": "g8",
+    "label": "Our Corner in Kerobokan",
+    "category": "Interior",
+    "height": 270,
+    "gradient": "linear-gradient(155deg,#d8b78a,#a97c48)"
+  }
+]

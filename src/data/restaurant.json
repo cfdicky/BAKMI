@@ -1,0 +1,47 @@
+{
+  "name": "Bakmi Jakarta CC",
+  "tagline": "Authentic Jakarta Taste",
+  "description": "Experience the authentic taste of Jakarta's handmade noodles, freshly pulled and prepared every day in the heart of Bali.",
+  "founded": "Family-Run",
+  "sinceLabel": "Warm Since 2016",
+  "address": "Jl. Raya Kerobokan No. 66, Kerobokan Kaja, Kec. Kuta Utara, Kabupaten Badung, Bali 80361",
+  "mapCoordinates": { "lat": -8.6471874, "lng": 115.1710761 },
+  "googlePlaceId": "ChIJB4tGcaU50i0REntSMwWnmQg",
+  "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Bakmi+CC+Jakarta+Kerobokan&query_place_id=ChIJB4tGcaU50i0REntSMwWnmQg",
+  "phone": "+62 896-7016-4430",
+  "whatsapp": "https://wa.me/6289670164430",
+  "instagram": "@bakmiccjakarta",
+  "instagramUrl": "https://www.instagram.com/bakmiccjakarta/",
+  "halal": true,
+  "hours": [
+    { "days": "Thu – Tue", "time": "09:00 – 22:00" },
+    { "days": "Wednesday", "time": "Closed" }
+  ],
+  "parkingNote": "Motorbike and street parking available near the restaurant on Jl. Raya Kerobokan.",
+  "timeline": [
+    {
+      "year": "1985",
+      "title": "The Recipe Begins",
+      "text": "A grandmother in Jakarta starts hand-pulling noodles for the whole neighbourhood."
+    },
+    {
+      "year": "2011",
+      "title": "Bakmi Jakarta Opens",
+      "text": "The family opens its first proper stall in Jakarta, recipe unchanged."
+    },
+    {
+      "year": "2016",
+      "title": "Landing in Bali",
+      "text": "Bakmi Jakarta CC brings the same bowl to Bali's shores for the first time."
+    },
+    {
+      "year": "Today",
+      "title": "A Home for Everyone",
+      "text": "A family-run favourite for locals, digital nomads and travellers passing through."
+    }
+  ],
+  "aboutParagraphs": [
+    "Bakmi Jakarta CC began as a family recipe long before it became a restaurant — noodles hand-pulled in a small Jakarta kitchen, served to neighbours who kept coming back. Today the same recipe, the same broth, and the same care greet families, tourists and regulars across a warm dining room in Bali.",
+    "Every table here is treated like it's the only one in the house — because that's how the recipe was always meant to be shared."
+  ]
+}

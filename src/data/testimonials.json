@@ -1,0 +1,39 @@
+{
+  "_comment": "Real reviews from Google Maps for Bakmi CC Jakarta - Kerobokan, used as a fallback while no live Google Places API key is configured.",
+  "rating": 4.6,
+  "reviewCount": 232,
+  "reviews": [
+    {
+      "id": "t1",
+      "author": "Sheila Fernandez",
+      "initials": "SF",
+      "color": "#E53935",
+      "rating": 5,
+      "text": "If you're from Jakarta and missed Bakmi from Jakarta. You should try this place. You can order online or come to the store. The bakmi keriting is really good."
+    },
+    {
+      "id": "t2",
+      "author": "Mohamad Khair",
+      "initials": "MK",
+      "color": "#FFD101",
+      "rating": 5,
+      "text": "I was warmly welcomed by the friendly owner and the staff and got myself Bakmie Ayam with Ice cappuccino. Bakmie ayam was good as usual. Good food and friendly people."
+    },
+    {
+      "id": "t3",
+      "author": "Maria Andreo Sisó",
+      "initials": "MA",
+      "color": "#181818",
+      "rating": 5,
+      "text": "Coming from Spain trying to find local food and found the tastiest one. Both food and service were amazing. Definitely the place to eat local food!!"
+    },
+    {
+      "id": "t4",
+      "author": "Josie Chapman",
+      "initials": "JC",
+      "color": "#4C8C4A",
+      "rating": 5,
+      "text": "All the staff are amazing! Being from England I didn't expect to discover such a find!! The best food ever should definitely try if you come to Bali!"
+    }
+  ]
+}

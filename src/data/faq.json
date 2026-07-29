@@ -1,0 +1,27 @@
+[
+  {
+    "id": "f1",
+    "question": "Is Bakmi Jakarta CC halal?",
+    "answer": "Yes — Bakmi Jakarta CC is 100% halal."
+  },
+  {
+    "id": "f2",
+    "question": "Are you open every day?",
+    "answer": "We're open daily from 9AM to 10PM, except Wednesdays when we're closed for the day."
+  },
+  {
+    "id": "f3",
+    "question": "Is delivery available?",
+    "answer": "Yes, Bakmi Jakarta CC is available on GoFood and GrabFood for delivery around Kerobokan and nearby areas, in addition to dine-in and takeaway."
+  },
+  {
+    "id": "f4",
+    "question": "Do you take reservations for large groups?",
+    "answer": "We're a small, cozy place, so for groups of 6 or more we recommend calling or messaging us on WhatsApp ahead of time so we can look after you properly."
+  },
+  {
+    "id": "f5",
+    "question": "Do you have non-meat options?",
+    "answer": "Our menu is built around meat, seafood and noodles, so it's best to check with our staff directly about what can be adjusted for you."
+  }
+]

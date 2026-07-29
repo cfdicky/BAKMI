@@ -1,0 +1,67 @@
+[
+
+  {
+    "id": "bakmi-ayam-pangsit",
+    "name": "Bakmi Ayam Pangsit",
+    "category": "bakmi",
+    "categoryLabel": "Bakmi",
+    "price": "Rp 45.000",
+    "description": "Classic chicken noodles served with house-made chicken wontons.",
+    "favorite": true,
+    "tone": "#4a2c1c"
+  },
+
+
+  {
+    "id": "dimsum-combo",
+    "name": "Dimsum Original",
+    "category": "dimsum",
+    "categoryLabel": "Dimsum",
+    "price": "Rp 55.000",
+    "description": "Siomay, hakau & crispy lumpia, steamed and served with chili oil.",
+    "favorite": false,
+    "tone": "#4a3a2a"
+  },
+
+  {
+    "id": "dimsum-mentai",
+    "name": "Dimsum Mentai",
+    "category": "dimsum",
+    "categoryLabel": "Dimsum",
+    "price": "Rp 58.000",
+    "description": "Steamed dimsum topped with creamy mentai sauce and torched to perfection.",
+    "favorite": false,
+    "tone": "#4a3a2a"
+  },
+
+  {
+    "id": "nasi-goreng-kampung",
+    "name": "Nasi Goreng Kampung",
+    "category": "fried",
+    "categoryLabel": "Fried Rice",
+    "price": "Rp 40.000",
+    "description": "Traditional fried rice with egg, chicken satay, crackers & pickles — a complete Indonesian feast.",
+    "favorite": false,
+    "tone": "#4a2c1c"
+  },
+  {
+    "id": "gado-gado",
+    "name": "Gado Gado",
+    "category": "salad",
+    "categoryLabel": "Salad",
+    "price": "Rp 35.000",
+    "description": "Indonesian salad with boiled vegetables, tofu, egg, lontong, and peanut sauce dressing.",
+    "favorite": false,
+    "tone": "#5a7a3a"
+  },
+  {
+    "id": "mie-goreng",
+    "name": "Mie Goreng",
+    "category": "fried",
+    "categoryLabel": "Fried Rice",
+    "price": "Rp 40.000",
+    "description": "Stir-fried noodles with egg, chicken, vegetables, and sweet soy sauce — a classic Indonesian favourite.",
+    "favorite": false,
+    "tone": "#4a2c1c"
+  }
+]
