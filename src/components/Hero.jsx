@@ -104,7 +104,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-bg pt-28 md:pt-[150px] pb-12 md:pb-24">
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-bg pt-28 md:pt-[150px] pb-12 md:pb-24" style={{ minHeight: '100dvh' }}>
       <div
         ref={blob1Ref}
         className="absolute w-[640px] h-[640px] rounded-full opacity-55 blur-[70px] -top-40 -right-36 transition-transform duration-500 ease-out"
