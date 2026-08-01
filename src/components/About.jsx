@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import restaurant from '../data/restaurant.json'
-import mieImg from '../assets/mie.png'
-import bakmi2Img from '../assets/bakmi-2.png'
+import mieImg from '../assets/mie.webp'
+import bakmi2Img from '../assets/bakmi-2.webp'
 
 const reveal = {
   hidden: { opacity: 0, y: 36 },
@@ -18,7 +18,7 @@ export default function About() {
           WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 65%)',
         }}
       >
-        <img src={mieImg} alt="" className="w-[130%] h-[130%] max-w-none object-cover" />
+        <img src={mieImg} alt="" className="w-[130%] h-[130%] max-w-none object-cover" loading="lazy" decoding="async" />
       </div>
       <div className="container mx-auto px-8 max-w-[1280px] relative z-[1] grid grid-cols-1 md:grid-cols-[0.9fr_1.1fr] gap-16 md:gap-20 items-start">
         <motion.div
@@ -36,7 +36,7 @@ export default function About() {
               className="absolute inset-0"
               style={{ background: 'radial-gradient(circle at 30% 20%, rgba(255,193,7,.18), transparent 55%)' }}
             />
-            <img src={bakmi2Img} alt="Bakmi Jakarta" className="w-full h-full object-cover relative z-[1]" />
+            <img src={bakmi2Img} alt="Bakmi Jakarta" className="w-full h-full object-cover relative z-[1]" loading="lazy" decoding="async" />
             <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-[2] bg-black/40 backdrop-blur-md rounded-2xl px-4 sm:px-6 py-3 sm:py-4 border border-white/15 shadow-xl text-center">
               <p className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-accent tracking-wide leading-none mb-1">10</p>
               <p className="text-white/95 text-[0.62rem] md:text-[0.72rem] font-sans font-medium leading-relaxed tracking-widest uppercase">

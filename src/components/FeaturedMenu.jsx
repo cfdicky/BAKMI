@@ -2,12 +2,12 @@ import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import menuItems from '../data/menus.json'
 import FoodIcon from './icons/FoodIcon.jsx'
-import bakmiAyamPangsitImg from '../assets/bakmi-ayam-pangsit.png'
-import dimsumImg from '../assets/dimsum.png'
-import dimsumMentaiImg from '../assets/dimsum-mentai.png'
-import nasiGorengImg from '../assets/nasi-goreng.png'
-import gadoGadoImg from '../assets/gadogado.png'
-import mieGorengImg from '../assets/mie-goreng.png'
+import bakmiAyamPangsitImg from '../assets/bakmi-ayam-pangsit.webp'
+import dimsumImg from '../assets/dimsum.webp'
+import dimsumMentaiImg from '../assets/dimsum-mentai.webp'
+import nasiGorengImg from '../assets/nasi-goreng.webp'
+import gadoGadoImg from '../assets/gadogado.webp'
+import mieGorengImg from '../assets/mie-goreng.webp'
 
 const itemImages = {
   'bakmi-ayam-pangsit': bakmiAyamPangsitImg,
@@ -85,7 +85,7 @@ export default function FeaturedMenu() {
                   )}
                   <div className="w-full h-full transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
                     {itemImages[item.id] ? (
-                      <img src={itemImages[item.id]} alt={item.name} className="w-full h-full object-cover" />
+                      <img src={itemImages[item.id]} alt={item.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     ) : (
                       <FoodIcon tone={item.tone} />
                     )}

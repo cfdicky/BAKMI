@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import bakmiImg from '../assets/bakmi.png'
-import mieImg from '../assets/mie.png'
+import bakmiImg from '../assets/bakmi.webp'
+import mieImg from '../assets/mie.webp'
 import logo from '../assets/logo.png'
 import restaurant from '../data/restaurant.json'
 
@@ -186,7 +186,7 @@ export default function Hero() {
           <div className="relative w-full max-w-[560px]">
             {/* Bakmi photo with frame */}
             <div className="relative z-[1] rounded-[24px] sm:rounded-[32px] border-[4px] sm:border-[6px] border-white overflow-hidden" style={{ boxShadow: '0 30px 60px -16px rgba(0,0,0,0.35), 0 12px 28px -8px rgba(0,0,0,0.2), inset 0 -8px 20px -6px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.3)' }}>
-              <img src={bakmiImg} alt="Bakmi Jakarta" className="w-full" />
+              <img src={bakmiImg} alt="Bakmi Jakarta" className="w-full" width={922} height={1152} decoding="async" fetchpriority="high" />
             </div>
 
             {/* Steam */}
