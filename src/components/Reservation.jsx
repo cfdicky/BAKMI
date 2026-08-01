@@ -40,14 +40,14 @@ export default function Reservation() {
                 onSubmit={handleSubmit}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-4"
               >
-                <Field label="Full Name" className="sm:col-span-2">
-                  <input type="text" required placeholder="Your name" className={inputClass} />
+                <Field label="Full Name" htmlFor="res-name" className="sm:col-span-2">
+                  <input id="res-name" name="name" type="text" required placeholder="Your name" className={inputClass} />
                 </Field>
-                <Field label="Phone / WhatsApp">
-                  <input type="tel" required placeholder="+62 8xx xxxx xxxx" className={inputClass} />
+                <Field label="Phone / WhatsApp" htmlFor="res-phone">
+                  <input id="res-phone" name="phone" type="tel" required placeholder="+62 8xx xxxx xxxx" className={inputClass} />
                 </Field>
-                <Field label="Guests">
-                  <select required className={inputClass} defaultValue="">
+                <Field label="Guests" htmlFor="res-guests">
+                  <select id="res-guests" name="guests" required className={inputClass} defaultValue="">
                     <option value="" disabled>
                       Select
                     </option>
@@ -57,14 +57,16 @@ export default function Reservation() {
                     <option>9+ people</option>
                   </select>
                 </Field>
-                <Field label="Date">
-                  <input type="date" required className={inputClass} />
+                <Field label="Date" htmlFor="res-date">
+                  <input id="res-date" name="date" type="date" required className={inputClass} />
                 </Field>
-                <Field label="Time">
-                  <input type="time" required className={inputClass} />
+                <Field label="Time" htmlFor="res-time">
+                  <input id="res-time" name="time" type="time" required className={inputClass} />
                 </Field>
-                <Field label="Message (optional)" className="sm:col-span-2">
+                <Field label="Message (optional)" htmlFor="res-message" className="sm:col-span-2">
                   <textarea
+                    id="res-message"
+                    name="message"
                     rows={3}
                     placeholder="Allergies, celebrations, seating preference..."
                     className={inputClass}
@@ -101,10 +103,12 @@ export default function Reservation() {
 const inputClass =
   'w-full px-4 py-3.5 border-[1.5px] border-border rounded-xl bg-bg text-text focus:outline-none focus:border-primary transition-colors'
 
-function Field({ label, className = '', children }) {
+function Field({ label, htmlFor, className = '', children }) {
   return (
     <div className={className}>
-      <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-2">{label}</label>
+      <label htmlFor={htmlFor} className="block text-xs font-semibold text-muted uppercase tracking-wide mb-2">
+        {label}
+      </label>
       {children}
     </div>
   )

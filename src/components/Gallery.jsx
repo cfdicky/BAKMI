@@ -34,7 +34,16 @@ export default function Gallery() {
               variants={reveal}
               transition={{ delay: (i % 4) * 0.06 }}
               className="masonry-item rounded-[22px] overflow-hidden relative cursor-pointer group"
+              role="button"
+              tabIndex={0}
+              aria-label={`Open ${item.label}`}
               onClick={() => setActive(item)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setActive(item)
+                }
+              }}
             >
               <div
                 className="relative flex items-end p-5 transition-transform duration-600 group-hover:scale-105"

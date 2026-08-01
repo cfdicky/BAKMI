@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.webp'
 import restaurant from '../data/restaurant.json'
 
 export default function Footer() {
@@ -42,12 +42,13 @@ export default function Footer() {
           </FooterCol>
 
           <div>
-            <h5 className="text-white text-xs uppercase tracking-wide mb-5 font-semibold">Newsletter</h5>
+            <h4 className="text-white text-xs uppercase tracking-wide mb-5 font-semibold">Newsletter</h4>
             <p className="text-sm text-white/55 mb-3.5">Get our weekend promos straight to your inbox.</p>
             <form onSubmit={handleSubscribe} className="flex border border-white/18 rounded-full p-1.5 pl-5">
               <input
                 type="email"
                 required
+                aria-label="Email address"
                 placeholder="Your email"
                 className="bg-transparent border-0 text-white flex-1 text-sm focus:outline-none placeholder:text-white/40"
               />
@@ -83,7 +84,7 @@ export default function Footer() {
 function FooterCol({ title, children }) {
   return (
     <div>
-      <h5 className="text-white text-xs uppercase tracking-wide mb-5 font-semibold">{title}</h5>
+      <h4 className="text-white text-xs uppercase tracking-wide mb-5 font-semibold">{title}</h4>
       <ul>{children}</ul>
     </div>
   )

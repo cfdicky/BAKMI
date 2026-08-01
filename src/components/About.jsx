@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import restaurant from '../data/restaurant.json'
 import mieImg from '../assets/mie.webp'
 import bakmi2Img from '../assets/bakmi-2.webp'
+import bakmi2ImgSm from '../assets/bakmi-2-640.webp'
 
 const reveal = {
   hidden: { opacity: 0, y: 36 },
@@ -36,7 +37,15 @@ export default function About() {
               className="absolute inset-0"
               style={{ background: 'radial-gradient(circle at 30% 20%, rgba(255,193,7,.18), transparent 55%)' }}
             />
-            <img src={bakmi2Img} alt="Bakmi Jakarta" className="w-full h-full object-cover relative z-[1]" loading="lazy" decoding="async" />
+            <img
+              src={bakmi2Img}
+              srcSet={`${bakmi2ImgSm} 640w, ${bakmi2Img} 1024w`}
+              sizes="(min-width: 768px) 520px, calc(100vw - 4rem)"
+              alt="Bakmi Jakarta"
+              className="w-full h-full object-cover relative z-[1]"
+              loading="lazy"
+              decoding="async"
+            />
             <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-[2] bg-black/40 backdrop-blur-md rounded-2xl px-4 sm:px-6 py-3 sm:py-4 border border-white/15 shadow-xl text-center">
               <p className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-accent tracking-wide leading-none mb-1">10</p>
               <p className="text-white/95 text-[0.62rem] md:text-[0.72rem] font-sans font-medium leading-relaxed tracking-widest uppercase">
@@ -76,7 +85,7 @@ export default function About() {
               >
                 <div className="font-serif font-bold text-[1.3rem] text-primary">{item.year}</div>
                 <div>
-                  <h4 className="text-[1.08rem] mb-2 font-serif font-semibold text-dark">{item.title}</h4>
+                  <h3 className="text-[1.08rem] mb-2 font-serif font-semibold text-dark">{item.title}</h3>
                   <p className="text-muted text-[0.92rem] max-w-[460px]">{item.text}</p>
                 </div>
               </motion.div>

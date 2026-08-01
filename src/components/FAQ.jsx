@@ -22,21 +22,26 @@ export default function FAQ() {
             const isOpen = openId === item.id
             return (
               <div key={item.id} className="border-b border-border">
-                <button
-                  className="w-full flex items-center justify-between gap-5 py-7 text-left"
-                  onClick={() => setOpenId(isOpen ? null : item.id)}
-                  aria-expanded={isOpen}
-                >
-                  <h4 className="text-[1.05rem] font-semibold text-dark">{item.question}</h4>
-                  <span
-                    className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-400 ${
-                      isOpen ? 'bg-primary text-white rotate-180' : 'bg-section text-dark'
-                    }`}
+                <h3 className="m-0">
+                  <button
+                    className="w-full flex items-center justify-between gap-5 py-7 text-left"
+                    onClick={() => setOpenId(isOpen ? null : item.id)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-panel-${item.id}`}
                   >
-                    <ChevronDown size={16} />
-                  </span>
-                </button>
+                    <span className="text-[1.05rem] font-semibold text-dark">{item.question}</span>
+                    <span
+                      className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-400 ${
+                        isOpen ? 'bg-primary text-white rotate-180' : 'bg-section text-dark'
+                      }`}
+                    >
+                      <ChevronDown size={16} />
+                    </span>
+                  </button>
+                </h3>
                 <div
+                  id={`faq-panel-${item.id}`}
+                  role="region"
                   className="overflow-hidden transition-all duration-500"
                   style={{ maxHeight: isOpen ? '200px' : '0px' }}
                 >

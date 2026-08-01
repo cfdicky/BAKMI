@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/pagination'
+import { useEffect, useRef, useState } from 'react'
 import restaurant from '../data/restaurant.json'
 import seedData from '../data/testimonials.json'
 
@@ -26,6 +22,9 @@ export default function Testimonials() {
   const [rating, setRating] = useState(seedData.rating)
   const [reviewCount, setReviewCount] = useState(seedData.reviewCount)
   const [isLive, setIsLive] = useState(false)
+  const [swiperLib, setSwiperLib] = useState(null)
+  const sectionRef = useRef(null)
+  const swiperImportStarted = useRef(false)
 
   useEffect(() => {
     if (!GOOGLE_MAPS_API_KEY) return // stay on the static fallback above
@@ -65,12 +64,48 @@ export default function Testimonials() {
     }
   }, [])
 
+  // Swiper is the heaviest third-party lib used here. Defer it: only fetch it
+  // when this section gets close to the viewport, showing a plain grid meanwhile.
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      importSwiper()
+      return
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          io.disconnect()
+          importSwiper()
+        }
+      },
+      { rootMargin: '500px 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  function importSwiper() {
+    if (swiperImportStarted.current) return
+    swiperImportStarted.current = true
+    Promise.all([
+      import('swiper/react'),
+      import('swiper/modules'),
+      import('swiper/css'),
+      import('swiper/css/pagination'),
+    ])
+      .then(([{ Swiper, SwiperSlide }, { Autoplay, Pagination }]) => {
+        setSwiperLib({ Swiper, SwiperSlide, Autoplay, Pagination })
+      })
+      .catch(() => {})
+  }
+
   return (
-    <section id="reviews" className="bg-section py-24 md:py-[140px]">
+    <section id="reviews" ref={sectionRef} className="bg-section py-24 md:py-[140px]">
       <div className="container mx-auto px-8 max-w-[1280px]">
         <div className="max-w-[640px] mx-auto text-center mb-8">
           <div className="inline-flex items-center gap-2.5 justify-center font-sans font-semibold text-[0.72rem] tracking-[0.22em] uppercase text-primary mb-4 before:content-[''] before:w-[26px] before:h-[1.5px] before:bg-primary before:block">
-Reviews
+            Reviews
           </div>
           <h2 className="font-serif font-bold text-dark text-[2.1rem] md:text-[2.8rem] lg:text-[3.4rem] leading-tight">
             What our guests say
@@ -92,42 +127,70 @@ Reviews
           </div>
         </div>
 
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={26}
-          slidesPerView={1}
-          breakpoints={{ 860: { slidesPerView: 3 } }}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-          pagination={{ clickable: true, el: '.tst-pagination' }}
-          className="!pb-14 mt-10"
-        >
-          {reviews.map((review) => (
-            <SwiperSlide key={review.id}>
-              <div className="p-8 rounded-[26px] bg-bg border border-border h-full">
-                <div className="text-accent tracking-[2px] mb-4">{'★'.repeat(review.rating || 5)}</div>
-                <p className="text-text mb-6 min-h-[96px]">&ldquo;{review.text}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-[46px] h-[46px] rounded-full flex items-center justify-center text-white font-serif font-bold text-sm overflow-hidden flex-shrink-0"
-                    style={{ background: review.color }}
-                  >
-                    {review.photo ? (
-                      <img src={review.photo} alt={review.author} className="w-full h-full object-cover" />
-                    ) : (
-                      review.initials
-                    )}
-                  </div>
-                  <div>
-                    <strong className="block text-sm text-dark">{review.author}</strong>
-                    <small className="text-muted text-xs">Google Review</small>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <div className="tst-pagination flex justify-center gap-2 -mt-6" />
+        {swiperLib ? (
+          <SwiperCarousel {...swiperLib} reviews={reviews} />
+        ) : (
+          <StaticReviews reviews={reviews} />
+        )}
       </div>
     </section>
+  )
+}
+
+function ReviewCard({ review }) {
+  return (
+    <div className="p-8 rounded-[26px] bg-bg border border-border h-full">
+      <div className="text-accent tracking-[2px] mb-4">{'★'.repeat(review.rating || 5)}</div>
+      <p className="text-text mb-6 min-h-[96px]">&ldquo;{review.text}&rdquo;</p>
+      <div className="flex items-center gap-3">
+        <div
+          className="w-[46px] h-[46px] rounded-full flex items-center justify-center text-white font-serif font-bold text-sm overflow-hidden flex-shrink-0"
+          style={{ background: review.color }}
+        >
+          {review.photo ? (
+            <img src={review.photo} alt={review.author} className="w-full h-full object-cover" />
+          ) : (
+            review.initials
+          )}
+        </div>
+        <div>
+          <strong className="block text-sm text-dark">{review.author}</strong>
+          <small className="text-muted text-xs">Google Review</small>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function StaticReviews({ reviews }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mt-10">
+      {reviews.slice(0, 3).map((review) => (
+        <ReviewCard key={review.id} review={review} />
+      ))}
+    </div>
+  )
+}
+
+function SwiperCarousel({ Swiper, SwiperSlide, Autoplay, Pagination, reviews }) {
+  return (
+    <>
+      <Swiper
+        modules={[Autoplay, Pagination]}
+        spaceBetween={26}
+        slidesPerView={1}
+        breakpoints={{ 860: { slidesPerView: 3 } }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        pagination={{ clickable: true, el: '.tst-pagination' }}
+        className="!pb-14 mt-10"
+      >
+        {reviews.map((review) => (
+          <SwiperSlide key={review.id}>
+            <ReviewCard review={review} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <div className="tst-pagination flex justify-center gap-2 -mt-6" />
+    </>
   )
 }

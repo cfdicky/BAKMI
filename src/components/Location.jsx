@@ -88,7 +88,7 @@ function LocBlock({ icon, title, children, last = false }) {
         {icon}
       </div>
       <div>
-        <h4 className="text-[1.02rem] mb-1.5 font-semibold text-dark">{title}</h4>
+        <h3 className="text-[1.02rem] mb-1.5 font-semibold text-dark">{title}</h3>
         {children}
       </div>
     </div>
