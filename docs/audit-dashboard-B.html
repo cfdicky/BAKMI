@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Visualisasi Dampak Langsung Inline CSS dan Resizing Gambar Terhadap LCP</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: #0f172a;
+    --panel-2: #111c31;
+    --line: #1e293b;
+    --ink: #e2e8f0;
+    --muted: #94a3b8;
+    --green: #22c55e;
+    --green-dark: #16a34a;
+    --green-soft: rgba(34,197,94,.12);
+    --green-border: rgba(34,197,94,.35);
+    --red: #f87171;
+    --red-soft: rgba(248,113,113,.12);
+    --red-border: rgba(248,113,113,.35);
+    --blue: #60a5fa;
+    --mono: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: radial-gradient(1200px 500px at 80% -10%, rgba(34,197,94,.14), transparent), var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .shell { max-width: 1280px; margin: 0 auto; padding: 44px 32px 64px; }
+  header.top { display: flex; flex-direction: column; gap: 8px; margin-bottom: 36px; }
+  .breadcrumb { font-family: var(--mono); font-size: 12px; color: var(--green); letter-spacing: .12em; text-transform: uppercase; }
+  header.top h1 { font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  header.top p { color: var(--muted); font-size: 15px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } header.top h1 { font-size: 25px; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .card-head { padding: 18px 24px; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+  .bad .card-head { background: var(--red-soft); border-bottom: 1px solid var(--red-border); color: var(--red); }
+  .good .card-head { background: var(--green-soft); border-bottom: 1px solid var(--green-border); color: var(--green); }
+  .card-head .bar { width: 4px; height: 20px; border-radius: 3px; }
+  .bad .card-head .bar { background: var(--red); }
+  .good .card-head .bar { background: var(--green); }
+  .card-body { padding: 24px; }
+  .big-metric { font-size: 34px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 6px; }
+  .big-metric .ms { font-size: 18px; font-weight: 600; color: var(--muted); margin-left: 4px; }
+  .bad .big-metric { color: var(--red); }
+  .good .big-metric { color: var(--green); }
+  .sub { color: var(--muted); font-size: 13.5px; margin-bottom: 18px; }
+  .note {
+    background: var(--red-soft); border: 1px solid var(--red-border); border-radius: 12px;
+    padding: 14px 16px; font-size: 14px; color: #fecaca; margin-bottom: 20px;
+  }
+  .note b { color: #fff; }
+  .timeline { display: flex; flex-direction: column; gap: 8px; }
+  .timeline .step { display: grid; grid-template-columns: 150px 1fr auto; gap: 12px; align-items: center; font-size: 13px; }
+  .timeline .step .k { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+  .timeline .track { height: 10px; border-radius: 999px; background: #1e293b; overflow: hidden; position: relative; }
+  .timeline .track .fill { position: absolute; inset: 0; border-radius: 999px; transform-origin: left; }
+  .timeline .step .v { font-family: var(--mono); font-weight: 600; }
+  .bad .timeline .v { color: var(--red); }
+  .good .timeline .v { color: var(--green); }
+  .good-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .good-metrics .cell { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .good-metrics .cell .k { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .good-metrics .cell .v { font-family: var(--mono); font-size: 19px; font-weight: 700; color: var(--green); }
+  .lcp-stamp {
+    margin-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    background: linear-gradient(120deg, rgba(34,197,94,.18), rgba(34,197,94,.05)); border: 1px solid var(--green-border);
+    border-radius: 14px; padding: 16px 20px;
+  }
+  .lcp-stamp .k { font-size: 13px; color: #d1fae5; }
+  .lcp-stamp .v { font-size: 26px; font-weight: 800; color: var(--green); }
+  .code-title { display: flex; align-items: center; gap: 10px; margin: 40px 0 16px; }
+  .code-title h2 { font-size: 21px; font-weight: 800; }
+  .code-title .live { background: var(--green-soft); color: var(--green); border: 1px solid var(--green-border); font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 999px; letter-spacing: .06em; }
+  .code-block { background: #020617; border: 1px solid #1e293b; border-radius: 14px; overflow: hidden; }
+  .code-block .head { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #0b1220; border-bottom: 1px solid #1e293b; }
+  .code-block .head .dots { display: flex; gap: 6px; }
+  .code-block .head .dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .code-block .head .dots i:nth-child(1) { background: #f87171; }
+  .code-block .head .dots i:nth-child(2) { background: #fbbf24; }
+  .code-block .head .dots i:nth-child(3) { background: #34d399; }
+  .code-block .head .fname { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .code-block .head .tag { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--green); background: var(--green-soft); padding: 3px 9px; border-radius: 999px; }
+  pre { padding: 18px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; line-height: 1.65; color: #e2e8f0; }
+  pre .c { color: #64748b; }
+  pre .t { color: #fbbf24; }
+  pre .a { color: #60a5fa; }
+  pre .s { color: #86efac; }
+  pre .g { color: #4ade80; }
+  pre .y { color: #fde68a; }
+  .foot { margin-top: 30px; text-align: center; color: #64748b; font-family: var(--mono); font-size: 12px; }
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="top">
+    <span class="breadcrumb">Laporan Teknis / Core Web Vitals / LCP</span>
+    <h1>Visualisasi Dampak Langsung Inline CSS dan Resizing Gambar Terhadap LCP</h1>
+    <p>Analisis perubahan tingkat kode (HTML / CSS / JS) terhadap metrik Largest Contentful Paint.</p>
+  </header>
+
+  <section class="grid-2">
+    <!-- KIRI: LCP awal -->
+    <article class="card bad">
+      <div class="card-head"><span class="bar"></span>Kode &amp; Analisis LCP Awal</div>
+      <div class="card-body">
+        <div class="big-metric">2.130 ms<span class="ms">element render delay</span></div>
+        <div class="sub">Konten utama baru dirender setelah alur utama (main thread) diblokir.</div>
+        <div class="note">
+          &#9888;&#65039; CSS Kritis (<span style="font-family:var(--mono);font-size:12px">index-Be5tM6Hz.css</span>) di <b>&lt;head&gt;</b> memblokir render,
+          <b>Forced reflow</b> (<span style="font-family:var(--mono);font-size:12px">CrNTOe-k.js</span>) menghentikan alur utama.
+        </div>
+        <div class="timeline">
+          <div class="step"><span class="k">TTFB</span><span class="track"><span class="fill" style="background:#fca5a5;width:2%"></span></span><span class="v">20 ms</span></div>
+          <div class="step"><span class="k">Load delay</span><span class="track"><span class="fill" style="background:#f87171;width:11%"></span></span><span class="v">420 ms</span></div>
+          <div class="step"><span class="k">Load duration</span><span class="track"><span class="fill" style="background:#f87171;width:33%"></span></span><span class="v">1.250 ms</span></div>
+          <div class="step"><span class="k">Render delay</span><span class="track"><span class="fill" style="background:#ef4444;width:100%"></span></span><span class="v">2.130 ms</span></div>
+        </div>
+        <div style="margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--red)">Total LCP awal &asymp; 3.820 ms &mdash; gagal ambang batas (&gt; 2.500 ms)</div>
+      </div>
+    </article>
+
+    <!-- KANAN: LCP teroptimasi -->
+    <article class="card good">
+      <div class="card-head"><span class="bar"></span>Kode &amp; Analisis LCP Teroptimasi</div>
+      <div class="card-body">
+        <div class="big-metric">195 ms<span class="ms">Optimized LCP</span></div>
+        <div class="sub">Rincian waktu muat baru setelah inline CSS &amp; resizing gambar.</div>
+        <div class="good-metrics">
+          <div class="cell"><div class="k">Time to first byte</div><div class="v">20 ms</div></div>
+          <div class="cell"><div class="k">Resource load delay</div><div class="v">5 ms</div></div>
+          <div class="cell"><div class="k">Resource load duration</div><div class="v">150 ms</div></div>
+          <div class="cell"><div class="k">Element render delay</div><div class="v">10 ms</div></div>
+        </div>
+        <div class="lcp-stamp">
+          <span class="k">Ringkasan</span>
+          <span class="v">Optimized LCP: 195 ms <span style="font-size:13px;font-weight:600;color:#d1fae5">(Instant Render)</span></span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Potongan kode solusi -->
+  <div class="code-title">
+    <h2>Potongan Kode Solusi</h2>
+    <span class="live">&#9679; Penerapan Langsung</span>
+  </div>
+  <section class="grid-2">
+    <div class="code-block">
+      <div class="head">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="fname">index.html &mdash; CSS Kritis Inline</span>
+        <span class="tag">critical-path</span>
+      </div>
+<pre><span class="c">&lt;!-- CSS kritis di-inline langsung di &lt;head&gt; --&gt;</span>
+<span class="t">&lt;style&gt;</span>
+<span class="c">  /* CSS Kritis... (warna, layout hero, LCP) */</span>
+<span class="c">  /* Tailwind utama kini disisipkan, bukan link eksternal */</span>
+<span class="t">&lt;/style&gt;</span>
+
+<span class="c">&lt;!-- CSS utama lainnya di-defer / dimuat asinkron --&gt;</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="head">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="fname">Hero.jsx &mdash; Gambar Responsif (LCP)</span>
+        <span class="tag">proper-size + srcset</span>
+      </div>
+<pre><span class="t">&lt;img</span> src=<span class="s">'/assets/bakmi_LCP.webp'</span>
+     width=<span class="s">'600'</span> height=<span class="s">'750'</span>
+     srcset=<span class="s">'/assets/bakmi_LCP.webp 600w,</span>
+             <span class="s">/assets/bakmi_LCP_2x.webp 1200w'</span>
+     sizes=<span class="s">'(min-width: 768px) 600px, 100vw'</span>
+     fetchpriority=<span class="s">'high'</span>
+     decoding=<span class="s">'async'</span>
+     alt=<span class="s">'Bakmi Jakarta'</span> <span class="t">/&gt;</span></pre>
+    </div>
+  </section>
+
+  <div class="foot">npm run build &mdash; main JS 381 KB (gzip 120 KB) &middot; swiper di-defer &middot; gambar LCP 600x750</div>
+</main>
+</body>
+</html>

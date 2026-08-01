@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Visualisasi Dampak Strategi Optimasi Kinerja Web</title>
+<style>
+  :root {
+    --red: #dc2626;
+    --red-soft: #fef2f2;
+    --red-border: #fecaca;
+    --green: #16a34a;
+    --green-dark: #15803d;
+    --green-soft: #f0fdf4;
+    --green-border: #bbf7d0;
+    --blue: #2563eb;
+    --blue-soft: #eff6ff;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --card: #ffffff;
+    --bg: #f1f5f9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .shell { max-width: 1280px; margin: 0 auto; padding: 40px 32px 64px; }
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #2563eb 100%);
+    border-radius: 22px;
+    padding: 44px 48px;
+    color: #fff;
+    margin-bottom: 36px;
+    box-shadow: 0 24px 60px -20px rgba(15, 23, 42, .45);
+  }
+  .hero .tag { display: inline-block; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); padding: 6px 14px; border-radius: 999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; margin-bottom: 16px; }
+  .hero h1 { font-size: 34px; line-height: 1.2; font-weight: 800; letter-spacing: -.02em; margin-bottom: 10px; }
+  .hero p { color: rgba(255,255,255,.82); font-size: 15px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 880px) { .grid-2 { grid-template-columns: 1fr; } .hero { padding: 32px 26px; } .hero h1 { font-size: 26px; } }
+  .card { background: var(--card); border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px -18px rgba(15,23,42,.25); border: 1px solid var(--line); }
+  .card-head { display: flex; align-items: center; gap: 14px; padding: 18px 24px; font-weight: 700; }
+  .card-head h2 { font-size: 19px; letter-spacing: -.01em; }
+  .card-head h2 span { font-weight: 500; font-size: 14px; opacity: .75; }
+  .bad .card-head { background: var(--red-soft); border-bottom: 1px solid var(--red-border); color: var(--red); }
+  .good .card-head { background: var(--green-soft); border-bottom: 1px solid var(--green-border); color: var(--green-dark); }
+  .ico { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ico-bad { background: #fee2e2; color: var(--red); }
+  .ico-good { background: #dcfce7; color: var(--green); }
+  ul.audit { list-style: none; padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 14px; }
+  ul.audit li { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; }
+  ul.audit .bad-item { background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d; }
+  ul.audit .good-item { background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; }
+  ul.audit .ic { flex-shrink: 0; width: 22px; height: 22px; margin-top: 1px; }
+  ul.audit code { font-family: "Cascadia Code", Consolas, monospace; font-size: 12.5px; background: rgba(0,0,0,.05); padding: 1px 6px; border-radius: 6px; }
+  .section-title { display: flex; align-items: center; gap: 12px; margin: 40px 0 18px; }
+  .section-title::before { content: ""; width: 6px; height: 26px; border-radius: 4px; background: var(--blue); }
+  .section-title h2 { font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
+  .section-title p { color: var(--muted); font-size: 13.5px; margin-left: auto; }
+  .lcp-card { padding: 22px 24px 26px; }
+  .img-frame {
+    position: relative; height: 200px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 17px; overflow: hidden; margin-bottom: 18px;
+  }
+  .bad-frame { background: linear-gradient(145deg, #fca5a5, #f87171 70%); color: #7f1d1d; }
+  .good-frame { background: linear-gradient(145deg, #86efac, #4ade80 70%); color: #14532d; }
+  .img-frame .pill { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,.22); color: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 5px 11px; border-radius: 999px; }
+  .lcp-metrics { display: flex; flex-direction: column; gap: 9px; }
+  .lcp-metrics .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--muted); }
+  .lcp-metrics .row b { color: var(--ink); font-size: 14.5px; }
+  .bar { height: 8px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+  .bar .fill { height: 100%; border-radius: 999px; }
+  .fill-red { width: 100%; background: linear-gradient(90deg, #fca5a5, #dc2626); }
+  .fill-blue { width: 55%; background: linear-gradient(90deg, #93c5fd, #2563eb); }
+  .fill-green { width: 8%; background: linear-gradient(90deg, #86efac, #16a34a); }
+  .lcp-total {
+    margin-top: 20px; background: linear-gradient(135deg, #052e16, #166534 60%, #16a34a);
+    color: #fff; border-radius: 14px; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .lcp-total .label { font-size: 14px; color: rgba(255,255,255,.85); }
+  .lcp-total .val { font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
+  .lcp-total .val small { font-size: 13px; font-weight: 600; background: rgba(255,255,255,.18); padding: 3px 10px; border-radius: 999px; margin-left: 8px; vertical-align: middle; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 880px) { .compare { grid-template-columns: 1fr; } }
+  .compare .col { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+  .compare .col h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .compare .col h3 .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-red { background: var(--red); }
+  .dot-green { background: var(--green); }
+  .foot { margin-top: 28px; text-align: center; color: var(--muted); font-size: 12.5px; }
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="hero">
+    <span class="tag">Laporan Audit Kinerja Web</span>
+    <h1>Visualisasi Dampak Strategi Optimasi Kinerja Web</h1>
+    <p>Bakmi Jakarta CC — Perbandingan hasil audit Lighthouse / PageSpeed Insights sebelum dan sesudah optimasi.</p>
+  </header>
+
+  <!-- SEBELUM vs SESUDAH -->
+  <section class="grid-2">
+    <article class="card bad">
+      <div class="card-head">
+        <span class="ico ico-bad">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </span>
+        <h2>SEBELUM <span>(Kondisi Saat Ini)</span></h2>
+      </div>
+      <ul class="audit">
+        <li class="bad-item">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span><b>Render-blocking CSS</b> <code>/assets/index-Be5tM6Hz.css</code> menunda LCP sebesar <b>160ms</b>.</span>
+        </li>
+        <li class="bad-item">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span><b>Ukuran gambar</b> <code>/assets/bakmi.webp</code> adalah <code>922x1152</code> untuk dimensi tampilan <code>595x743</code>, menyia-nyiakan bandwidth sebesar <b>99 KiB</b>.</span>
+        </li>
+      </ul>
+    </article>
+
+    <article class="card good">
+      <div class="card-head">
+        <span class="ico ico-good">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </span>
+        <h2>SESUDAH <span>(Kondisi Teroptimasi)</span></h2>
+      </div>
+      <ul class="audit">
+        <li class="good-item">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span><b>Lulus:</b> Ukuran gambar sesuai (<code>/assets/bakmi_LCP.webp</code> menjadi <code>600x750</code>) &mdash; <b>Menghemat 100 KiB</b>.</span>
+        </li>
+        <li class="good-item">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span><b>Lulus:</b> Mengeliminasi CSS pemblokir render <b>(CSS Kritis di-inline, CSS utama di-defer)</b>.</span>
+        </li>
+        <li class="good-item">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span><b>Lulus:</b> Mengurangi <b>forced reflow</b> (siklus baca/tulis JavaScript dioptimalkan).</span>
+        </li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- Perbandingan elemen LCP -->
+  <div class="section-title">
+    <h2>Perbandingan Visual Elemen LCP &mdash; Gambar &ldquo;Bakmi Jakarta&rdquo;</h2>
+    <p>Largest Contentful Paint</p>
+  </div>
+  <section class="compare">
+    <div class="col">
+      <h3><span class="dot dot-red"></span> SEBELUM &mdash; Analisis LCP Awal</h3>
+      <div class="img-frame bad-frame">
+        <span class="pill">Render delay tinggi</span>
+        Bakmi Jakarta
+      </div>
+      <div class="lcp-metrics">
+        <div class="row"><span>Element render delay</span><b style="color:var(--red)">TINGGI (2.130 ms)</b></div>
+        <div class="row"><span>Resource load duration</span><b>1.250 ms</b></div>
+        <div class="row"><span>Total LCP</span><b style="color:var(--red)">±3.820 ms</b></div>
+      </div>
+      <div class="bar" style="margin-top:14px"><div class="fill fill-red"></div></div>
+      <div style="margin-top:8px;font-size:12.5px;color:var(--muted)">Terhambat render-blocking CSS &amp; forced reflow pada alur utama.</div>
+    </div>
+
+    <div class="col">
+      <h3><span class="dot dot-green"></span> SESUDAH &mdash; Rincian LCP Baru</h3>
+      <div class="img-frame good-frame">
+        <span class="pill">Instant Render</span>
+        Bakmi Jakarta
+      </div>
+      <div class="lcp-metrics">
+        <div class="row"><span>Time to first byte</span><b>20 ms</b></div>
+        <div class="row"><span>Resource load delay</span><b>5 ms</b></div>
+        <div class="row"><span>Resource load duration</span><b>150 ms</b></div>
+        <div class="row"><span>Element render delay</span><b>10 ms</b></div>
+      </div>
+      <div class="bar" style="margin-top:14px"><div class="fill fill-green"></div></div>
+      <div class="lcp-total">
+        <span class="label">Ringkasan Total LCP</span>
+        <span class="val">195 ms <small>Instant Render</small></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Optimasi dilakukan pada HTML, CSS, dan komponen React &mdash; hasil build tervalidasi dengan <code>npm run build</code>.</div>
+</main>
+</body>
+</html>

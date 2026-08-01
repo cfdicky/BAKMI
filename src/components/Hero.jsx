@@ -187,12 +187,12 @@ export default function Hero() {
             <div className="relative z-[1] rounded-[24px] sm:rounded-[32px] border-[4px] sm:border-[6px] border-white overflow-hidden" style={{ boxShadow: '0 30px 60px -16px rgba(0,0,0,0.35), 0 12px 28px -8px rgba(0,0,0,0.2), inset 0 -8px 20px -6px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.3)' }}>
               <img
                 src="/bakmi.webp"
-                srcSet="/bakmi-560.webp 560w, /bakmi.webp 922w"
+                srcSet="/bakmi-retina.webp 1200w, /bakmi.webp 600w"
                 sizes="(min-width: 768px) 560px, calc(100vw - 4rem)"
                 alt="Bakmi Jakarta"
                 className="w-full"
-                width={922}
-                height={1152}
+                width={600}
+                height={750}
                 decoding="async"
                 fetchpriority="high"
               />
