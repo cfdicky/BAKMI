@@ -1,16 +1,8 @@
-import { useState } from 'react'
+import { Instagram, MessageCircle } from 'lucide-react'
 import logo from '../assets/logo.webp'
 import restaurant from '../data/restaurant.json'
 
 export default function Footer() {
-  const [subscribed, setSubscribed] = useState(false)
-
-  function handleSubscribe(e) {
-    e.preventDefault()
-    // NOTE: wire this up to your real newsletter provider (Mailchimp, Resend, etc.)
-    setSubscribed(true)
-  }
-
   return (
     <footer className="bg-dark text-white/75 pt-16 md:pt-[90px] pb-8">
       <div className="container mx-auto px-8 max-w-[1280px]">
@@ -42,23 +34,27 @@ export default function Footer() {
           </FooterCol>
 
           <div>
-            <h4 className="text-white text-xs uppercase tracking-wide mb-5 font-semibold">Newsletter</h4>
-            <p className="text-sm text-white/55 mb-3.5">Get our weekend promos straight to your inbox.</p>
-            <form onSubmit={handleSubscribe} className="flex border border-white/18 rounded-full p-1.5 pl-5">
-              <input
-                type="email"
-                required
-                aria-label="Email address"
-                placeholder="Your email"
-                className="bg-transparent border-0 text-white flex-1 text-sm focus:outline-none placeholder:text-white/40"
-              />
-              <button
-                type="submit"
-                className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap"
+            <h4 className="text-white text-xs uppercase tracking-wide mb-5 font-semibold">Follow Us</h4>
+            <div className="flex gap-3">
+              <a
+                href={restaurant.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow Bakmi Jakarta CC on Instagram"
+                className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-white/18 text-white hover:bg-primary hover:border-primary transition-colors"
               >
-                {subscribed ? 'Subscribed ✓' : 'Join'}
-              </button>
-            </form>
+                <Instagram size={22} />
+              </a>
+              <a
+                href={restaurant.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat Bakmi Jakarta CC on WhatsApp"
+                className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-white/18 text-white hover:bg-primary hover:border-primary transition-colors"
+              >
+                <MessageCircle size={22} />
+              </a>
+            </div>
           </div>
         </div>
 

@@ -43,7 +43,7 @@ export default function FAQ() {
                   id={`faq-panel-${item.id}`}
                   role="region"
                   className="overflow-hidden transition-all duration-500"
-                  style={{ maxHeight: isOpen ? '200px' : '0px' }}
+                  style={{ maxHeight: isOpen ? '320px' : '0px' }}
                 >
                   <p className="text-muted text-[0.94rem] pb-7 max-w-[640px]">{item.answer}</p>
                 </div>

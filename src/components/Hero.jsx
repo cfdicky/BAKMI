@@ -137,7 +137,7 @@ export default function Hero() {
             animate="show"
             custom={1}
             variants={fadeUp}
-            className="font-serif font-bold text-dark leading-[1.08] tracking-tight text-[2.8rem] md:text-[3.6rem] lg:text-[5.2rem] mb-5"
+            className="font-serif font-bold text-dark leading-[1.08] tracking-tight text-[2.4rem] sm:text-[3.2rem] md:text-[3.6rem] lg:text-[5.2rem] mb-5"
           >
             Handmade <em className="italic text-primary">Bakmi</em>,<br />
             Made Like Home.

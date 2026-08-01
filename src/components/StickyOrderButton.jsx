@@ -3,6 +3,7 @@ import { ShoppingBag } from 'lucide-react'
 export default function StickyOrderButton() {
   function scrollToReservation(e) {
     e.preventDefault()
+    window.dispatchEvent(new CustomEvent('bakmi:open-order'))
     document.getElementById('reservation')?.scrollIntoView({ behavior: 'smooth' })
   }
 
