@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
 import mieImg from '../assets/mie.webp'
 import logo from '../assets/logo.webp'
 import restaurant from '../data/restaurant.json'
@@ -77,29 +76,35 @@ const chips = [
   },
 ]
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 26 },
-  show: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, delay: 0.2 + i * 0.12, ease: [0.16, 0.84, 0.44, 1] },
-  }),
-}
-
 export default function Hero() {
   const blob1Ref = useRef(null)
   const blob2Ref = useRef(null)
 
   useEffect(() => {
+    let rafId = null
+    let tx = 0
+    let ty = 0
+
+    function apply() {
+      rafId = null
+      if (blob1Ref.current) blob1Ref.current.style.transform = `translate3d(${tx}px, ${ty}px, 0)`
+      if (blob2Ref.current) blob2Ref.current.style.transform = `translate3d(${-tx}px, ${-ty}px, 0)`
+    }
+
     function onMouseMove(e) {
       if (window.innerWidth < 768) return
-      const x = (e.clientX / window.innerWidth - 0.5) * 24
-      const y = (e.clientY / window.innerHeight - 0.5) * 24
-      if (blob1Ref.current) blob1Ref.current.style.transform = `translate(${x}px, ${y}px)`
-      if (blob2Ref.current) blob2Ref.current.style.transform = `translate(${-x}px, ${-y}px)`
+      tx = (e.clientX / window.innerWidth - 0.5) * 24
+      ty = (e.clientY / window.innerHeight - 0.5) * 24
+      // Coalesce style writes: schedule at most one transform update per frame
+      // instead of writing style on every mousemove event.
+      if (rafId == null) rafId = requestAnimationFrame(apply)
     }
-    window.addEventListener('mousemove', onMouseMove)
-    return () => window.removeEventListener('mousemove', onMouseMove)
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      if (rafId != null) cancelAnimationFrame(rafId)
+    }
   }, [])
 
   return (
@@ -107,12 +112,12 @@ export default function Hero() {
       <div
         ref={blob1Ref}
         className="absolute hidden md:block w-[640px] h-[640px] rounded-full opacity-55 blur-[70px] -top-40 -right-36 transition-transform duration-500 ease-out"
-        style={{ background: 'radial-gradient(circle, rgba(255,209,1,.65), transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(255,209,1,.65), transparent 70%)', willChange: 'transform' }}
       />
       <div
         ref={blob2Ref}
         className="absolute hidden md:block w-[320px] h-[320px] rounded-full opacity-40 blur-[80px] bottom-0 -left-16 transition-transform duration-500 ease-out"
-        style={{ background: 'radial-gradient(circle, rgba(229,57,53,.16), transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(229,57,53,.16), transparent 70%)', willChange: 'transform' }}
       />
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15">
@@ -122,43 +127,31 @@ export default function Hero() {
 
       <div className="container mx-auto px-8 max-w-[1280px] relative z-[2] grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
         <div className="text-center md:text-left order-2 md:order-1">
-          <motion.span
-            initial="hidden"
-            animate="show"
-            custom={0}
-            variants={fadeUp}
-            className="inline-flex items-center gap-2.5 font-sans font-semibold text-[0.72rem] tracking-[0.22em] uppercase text-primary mb-4 before:content-[''] before:w-[26px] before:h-[1.5px] before:bg-primary before:block"
+          <span
+            className="hero-fade-up inline-flex items-center gap-2.5 font-sans font-semibold text-[0.72rem] tracking-[0.22em] uppercase text-primary mb-4 before:content-[''] before:w-[26px] before:h-[1.5px] before:bg-primary before:block"
+            style={{ animationDelay: '0.2s' }}
           >
             {restaurant.tagline}
-          </motion.span>
+          </span>
 
-          <motion.h1
-            initial="hidden"
-            animate="show"
-            custom={1}
-            variants={fadeUp}
-            className="font-serif font-bold text-dark leading-[1.08] tracking-tight text-[2.4rem] sm:text-[3.2rem] md:text-[3.6rem] lg:text-[5.2rem] mb-5"
+          <h1
+            className="hero-fade-up font-serif font-bold text-dark leading-[1.08] tracking-tight text-[2.4rem] sm:text-[3.2rem] md:text-[3.6rem] lg:text-[5.2rem] mb-5"
+            style={{ animationDelay: '0.32s' }}
           >
             Handmade <em className="italic text-primary">Bakmi</em>,<br />
             Made Like Home.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial="hidden"
-            animate="show"
-            custom={3}
-            variants={fadeUp}
-            className="text-dark text-[1.15rem] mb-9 max-w-[520px] mx-auto md:mx-0"
+          <p
+            className="hero-fade-up text-dark text-[1.15rem] mb-9 max-w-[520px] mx-auto md:mx-0"
+            style={{ animationDelay: '0.56s' }}
           >
             {restaurant.description}
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial="hidden"
-            animate="show"
-            custom={4}
-            variants={fadeUp}
-            className="flex gap-4 flex-wrap justify-center md:justify-start mb-11"
+          <div
+            className="hero-fade-up flex gap-4 flex-wrap justify-center md:justify-start mb-11"
+            style={{ animationDelay: '0.68s' }}
           >
             <a
               href="#menu"
@@ -172,16 +165,11 @@ export default function Hero() {
             >
               Reserve Table
             </a>
-          </motion.div>
+          </div>
 
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.1, ease: [0.16, 0.84, 0.44, 1], delay: 0.3 }}
-          className="relative flex items-center justify-center order-1 md:order-2 w-full max-w-[520px] mx-auto md:mx-0 md:max-w-none"
-        >
+        <div className="hero-img-in relative flex items-center justify-center order-1 md:order-2 w-full max-w-[520px] mx-auto md:mx-0 md:max-w-none">
           <div className="relative w-full max-w-[560px]">
             {/* Bakmi photo with frame */}
             <div className="relative z-[1] rounded-[24px] sm:rounded-[32px] border-[4px] sm:border-[6px] border-white overflow-hidden" style={{ boxShadow: '0 30px 60px -16px rgba(0,0,0,0.35), 0 12px 28px -8px rgba(0,0,0,0.2), inset 0 -8px 20px -6px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.3)' }}>
@@ -225,7 +213,7 @@ export default function Hero() {
               <img src={logo} alt="Bakmi Jakarta CC logo stamp" className="w-full h-full rounded-full object-cover border-[3px] sm:border-[4px] border-white" style={{ boxShadow: '0 18px 34px -12px rgba(24,24,24,.35), 0 0 0 6px rgba(255,209,1,.35)' }} />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
