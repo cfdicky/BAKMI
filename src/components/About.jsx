@@ -71,26 +71,6 @@ export default function About() {
               {p}
             </p>
           ))}
-
-          <div className="mt-12 border-t border-border">
-            {restaurant.timeline.map((item, i) => (
-              <motion.div
-                key={item.year + item.title}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.4 }}
-                variants={reveal}
-                transition={{ delay: i * 0.05 }}
-                className="grid grid-cols-[70px_1fr] sm:grid-cols-[110px_1fr] gap-4 sm:gap-7 py-6 sm:py-7 border-b border-border"
-              >
-                <div className="font-serif font-bold text-[1.3rem] text-primary">{item.year}</div>
-                <div>
-                  <h3 className="text-[1.08rem] mb-2 font-serif font-semibold text-dark">{item.title}</h3>
-                  <p className="text-muted text-[0.92rem] max-w-[460px]">{item.text}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

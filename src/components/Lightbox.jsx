@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { X, Image } from 'lucide-react'
+import GALLERY_IMAGES from '../data/galleryImages.js'
 
-export default function Lightbox({ item, onClose }) {
+export default function Lightbox({ item, src, aspect = 'aspect-[3/4]', onClose }) {
+  const imageSrc = src || (item && GALLERY_IMAGES[item.image])
   return (
     <AnimatePresence>
       {item && (
@@ -26,15 +28,20 @@ export default function Lightbox({ item, onClose }) {
             >
               <X size={20} />
             </button>
-            <div
-              className="aspect-[5/4] flex items-center justify-center relative"
-              style={{ background: item.gradient }}
-            >
-              <Image size={70} className="text-white/40" />
-            </div>
+            {imageSrc ? (
+              <img src={imageSrc} alt={item.label || item.name} className={`w-full ${aspect} object-cover`} />
+            ) : (
+              <div
+                className="aspect-[5/4] flex items-center justify-center relative"
+                style={{ background: `linear-gradient(155deg, ${item.tone}, #181818)` }}
+              >
+                <Image size={70} className="text-white/40" />
+              </div>
+            )}
             <div className="px-7 py-6 text-white">
-              <small className="text-white/50 uppercase tracking-wide text-xs">{item.category}</small>
-              <h3 className="font-serif text-xl mt-1">{item.label}</h3>
+              <small className="text-white/50 uppercase tracking-wide text-xs">{item.category || item.categoryLabel}</small>
+              <h3 className="font-serif text-xl mt-1">{item.label || item.name}</h3>
+              {item.description && <p className="text-white/70 text-sm mt-2">{item.description}</p>}
             </div>
           </motion.div>
         </motion.div>

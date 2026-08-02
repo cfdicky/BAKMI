@@ -1,58 +1,78 @@
 [
   {
     "id": "g1",
-    "label": "Hand-Pulling the Dough",
-    "category": "Kitchen",
-    "height": 260,
-    "gradient": "linear-gradient(155deg,#3a2c1c,#181110)"
+    "label": "Grand Opening",
+    "category": "",
+    "image": "testimoni-1.webp",
+    "tone": "#4a2c1c",
+    "rotate": -3,
+    "lift": 0,
+    "pin": "tape"
   },
   {
     "id": "g2",
-    "label": "Weekend Dining Room",
-    "category": "Interior",
-    "height": 320,
-    "gradient": "linear-gradient(155deg,#e5cba3,#c99a63)"
+    "label": "Guest Moment",
+    "category": "",
+    "image": "testimoni-2.webp",
+    "tone": "#4a3a2a",
+    "rotate": 2,
+    "lift": 28
   },
   {
     "id": "g3",
-    "label": "Bakmi Jakarta Original",
-    "category": "Food",
-    "height": 230,
-    "gradient": "linear-gradient(155deg,#5c2a1c,#2c1410)"
+    "label": "Guest Moment",
+    "category": "",
+    "image": "testimoni-3.webp",
+    "tone": "#4a3a2a",
+    "rotate": -2,
+    "lift": 12,
+    "pin": "tape"
   },
   {
     "id": "g4",
-    "label": "The Broth, Slow-Simmered",
-    "category": "Kitchen",
-    "height": 290,
-    "gradient": "linear-gradient(155deg,#7a4a2a,#3a2416)"
+    "label": "Warm smiles and hearty welcomes are always on the menu with our wonderful staff",
+    "category": "",
+    "image": "testimoni-4.webp",
+    "tone": "#4a2c1c",
+    "aspect": "aspect-[10/9]",
+    "rotate": 3,
+    "lift": 42
   },
   {
     "id": "g5",
-    "label": "Chef at the Wok",
-    "category": "Chef",
-    "height": 250,
-    "gradient": "linear-gradient(155deg,#2c2c2c,#111111)"
+    "label": "Sharing a meal, sharing stories",
+    "category": "",
+    "image": "testimoni-5.webp",
+    "tone": "#5a7a3a",
+    "rotate": -1,
+    "lift": 8
   },
   {
     "id": "g6",
-    "label": "Family Table, Sunday",
-    "category": "Guests",
-    "height": 300,
-    "gradient": "linear-gradient(155deg,#e7cba0,#b98850)"
+    "label": "Capturing the beauty of everyday moments",
+    "category": "",
+    "image": "testimoni-6.webp",
+    "tone": "#4a2c1c",
+    "rotate": 2,
+    "lift": 32
   },
   {
     "id": "g7",
-    "label": "Fresh Off the Steamer",
-    "category": "Food",
-    "height": 240,
-    "gradient": "linear-gradient(155deg,#8a5a2a,#3a2010)"
+    "label": "Teamwork makes the dream work, one stack at a time.",
+    "category": "",
+    "image": "testimoni-7.webp",
+    "tone": "#232020",
+    "rotate": -3,
+    "lift": 16
   },
   {
     "id": "g8",
-    "label": "Our Corner in Kerobokan",
-    "category": "Interior",
-    "height": 270,
-    "gradient": "linear-gradient(155deg,#d8b78a,#a97c48)"
+    "label": "From Spain to Indonesia, a shared love for delicious, authentic street food. Bakmi knows no borders",
+    "category": "",
+    "image": "testimoni-8.webp",
+    "tone": "#4a2c1c",
+    "rotate": 1,
+    "lift": 26,
+    "pin": "tape"
   }
 ]

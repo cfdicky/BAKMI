@@ -27,7 +27,6 @@ export default function Location() {
             allowFullScreen
             title="Bakmi Jakarta CC location"
             className="w-full h-full min-h-[340px] md:min-h-[480px] border-0"
-            style={{ filter: 'grayscale(.2) contrast(1.05)' }}
           />
         </motion.div>
 

@@ -106,12 +106,12 @@ export default function Hero() {
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-bg pt-28 md:pt-[150px] pb-12 md:pb-24" style={{ minHeight: '100dvh' }}>
       <div
         ref={blob1Ref}
-        className="absolute w-[640px] h-[640px] rounded-full opacity-55 blur-[70px] -top-40 -right-36 transition-transform duration-500 ease-out"
+        className="absolute hidden md:block w-[640px] h-[640px] rounded-full opacity-55 blur-[70px] -top-40 -right-36 transition-transform duration-500 ease-out"
         style={{ background: 'radial-gradient(circle, rgba(255,209,1,.65), transparent 70%)' }}
       />
       <div
         ref={blob2Ref}
-        className="absolute w-[320px] h-[320px] rounded-full opacity-40 blur-[80px] bottom-0 -left-16 transition-transform duration-500 ease-out"
+        className="absolute hidden md:block w-[320px] h-[320px] rounded-full opacity-40 blur-[80px] bottom-0 -left-16 transition-transform duration-500 ease-out"
         style={{ background: 'radial-gradient(circle, rgba(229,57,53,.16), transparent 70%)' }}
       />
 

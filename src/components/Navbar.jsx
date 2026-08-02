@@ -29,8 +29,10 @@ export default function Navbar() {
     <>
       <header className="fixed top-0 left-0 right-0 z-[200] flex justify-center px-6 py-5">
         <div
-          className={`w-full max-w-[1180px] flex items-center justify-between pl-6 pr-3 py-3 rounded-full border border-white/70 backdrop-blur-xl transition-all duration-400 ${
-            scrolled ? 'bg-white/85 shadow-[0_12px_34px_-10px_rgba(24,24,24,.14)]' : 'bg-glass shadow-[0_8px_30px_-12px_rgba(24,24,24,.08)]'
+          className={`w-full max-w-[1180px] flex items-center justify-between pl-6 pr-3 py-3 rounded-full border border-white/70 backdrop-blur-none md:backdrop-blur-xl transition-all duration-400 ${
+            scrolled
+              ? 'bg-white/95 md:bg-white/85 shadow-[0_12px_34px_-10px_rgba(24,24,24,.14)]'
+              : 'bg-white/80 md:bg-glass shadow-[0_8px_30px_-12px_rgba(24,24,24,.08)]'
           }`}
         >
           <a href="#home" className="flex items-center gap-3 font-serif font-bold text-[1.05rem] text-dark">

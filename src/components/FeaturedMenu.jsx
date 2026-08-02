@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import menuItems from '../data/menus.json'
 import FoodIcon from './icons/FoodIcon.jsx'
+import Lightbox from './Lightbox.jsx'
 import bakmiAyamPangsitImg from '../assets/bakmi-ayam-pangsit.webp'
 import dimsumImg from '../assets/dimsum.webp'
 import dimsumMentaiImg from '../assets/dimsum-mentai.webp'
@@ -20,6 +21,7 @@ const itemImages = {
 
 export default function FeaturedMenu() {
   const [activeCategory, setActiveCategory] = useState('all')
+  const [activeItem, setActiveItem] = useState(null)
 
   const categories = useMemo(() => {
     const seen = new Map()
@@ -75,7 +77,17 @@ export default function FeaturedMenu() {
                 className="rounded-[26px] bg-bg border border-border overflow-hidden hover:-translate-y-2 hover:shadow-[0_34px_60px_-26px_rgba(24,24,24,.2)] transition-all duration-500 group"
               >
                 <div
-                  className="relative aspect-[5/4] flex items-center justify-center overflow-hidden"
+                  className="relative aspect-[5/4] flex items-center justify-center overflow-hidden cursor-pointer"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View ${item.name}`}
+                  onClick={() => setActiveItem(item)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setActiveItem(item)
+                    }
+                  }}
                   style={{ background: 'linear-gradient(155deg,#fff7ec,#fbe9d6)' }}
                 >
                   {item.favorite && (
@@ -95,10 +107,7 @@ export default function FeaturedMenu() {
                   <span className="block text-[0.68rem] uppercase tracking-wide font-semibold text-muted mb-1.5">
                     {item.categoryLabel}
                   </span>
-                  <div className="flex justify-between items-baseline gap-2.5 mb-2">
-                    <h3 className="font-serif font-semibold text-[1.14rem] text-dark">{item.name}</h3>
-                    <span className="font-serif font-bold text-primary whitespace-nowrap">{item.price}</span>
-                  </div>
+                  <h3 className="font-serif font-semibold text-[1.14rem] text-dark">{item.name}</h3>
                   <p className="text-muted text-[0.87rem]">{item.description}</p>
                 </div>
               </motion.div>
@@ -106,6 +115,13 @@ export default function FeaturedMenu() {
           </AnimatePresence>
         </div>
       </div>
+
+      <Lightbox
+        item={activeItem}
+        src={activeItem && itemImages[activeItem.id]}
+        aspect="aspect-[5/4]"
+        onClose={() => setActiveItem(null)}
+      />
     </section>
   )
 }

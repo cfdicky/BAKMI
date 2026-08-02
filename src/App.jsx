@@ -17,7 +17,10 @@ export default function App() {
   useEffect(() => {
     // Respect users who've asked their OS/browser for reduced motion.
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return
+    // Let touch devices use native scrolling — Lenis's rAF loop can make
+    // scroll feel heavier on mobile.
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    if (prefersReducedMotion || isTouchDevice) return
 
     const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
     let rafId
